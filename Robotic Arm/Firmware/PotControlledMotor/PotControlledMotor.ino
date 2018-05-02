@@ -1,24 +1,36 @@
- /*********************************************************
+ /******************************************************************************************
  * Speed Control Program using a Potentiometer
  * Description: This program uses a potentiometer to control
- * the PWM signal sent to the motor.
- **********************************************************/
+ * the PWM signal sent to the motor. This code will be used for educational purposes or for
+ * testing the functionality of hardware.
+ ********************************************************************************************/
 
 #define motorpin 6
 #define directionpin 7
 #define potpin 0
+#define encoderpin 1
 
 int motorvalue = 0;
 int forward = 1;
 int reverse = 0;
 int potvalue = 0; //variable to store the pot value
 int potmotorval;
+int encoderval;
+int encoder;
+int gain = 2;
+int potcontrolval;
+int error;
+int motorinput;
+int count = 0;
+int posval;
+int compval;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(motorpin, OUTPUT);
   pinMode(potpin, INPUT);
+  pinMode(encoderpin, INPUT);
 
   // Set motors to zero speed and in the forward direction
   digitalWrite(directionpin,forward);
@@ -28,10 +40,36 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   potvalue = analogRead(potpin);
-  potmotorval = map(potvalue,0,714,0,255);
+  encoder = analogRead(encoderpin);
+  encoderval = map(encoder,0,709,0,360);
+
+  if(count < 1){
+    compval = encoderval;
+    count = 1;
+  }
+  
+  posval = encoderval - compval;
+  
+  //potmotorval = map(potvalue,0,714,0,255);
+  potcontrolval = map(potvalue,0,714,0,360);
+  error = potcontrolval - posval;
+  motorinput = gain*error; 
+
+  if(abs(motorinput) >= 150 ){
+    motorinput = 0;
+    Serial.print("%The motorinput has saturated!!!");
+  }
+  
   Serial.print(potvalue);
   Serial.print("  ");
-  Serial.println(potmotorval);
-  analogWrite(motorpin,potmotorval);
+  Serial.print(potmotorval);
+  Serial.print("  ");
+  Serial.print(encoderval);
+  Serial.print("  ");
+  Serial.print(motorinput);
+  Serial.print("  ");
+  Serial.println(posval);
+  
+  analogWrite(motorpin,0);
   
 }
