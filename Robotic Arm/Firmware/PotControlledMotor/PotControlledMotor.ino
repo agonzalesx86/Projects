@@ -17,13 +17,13 @@ int potvalue = 0; //variable to store the pot value
 int potmotorval;
 int encoderval;
 int encoder;
-int gain = 2;
+float gain = 0.3;
 int potcontrolval;
-int error;
+float error;
 int motorinput;
 int count = 0;
-int posval;
-int compval;
+int encoderval_initial;
+int motordirection;
 
 void setup() {
   // put your setup code here, to run once:
@@ -39,37 +39,49 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  
   potvalue = analogRead(potpin);
-  encoder = analogRead(encoderpin);
+  encoder = analogRead(encoderpin); 
   encoderval = map(encoder,0,709,0,360);
-
-  if(count < 1){
-    compval = encoderval;
-    count = 1;
+  //encoderval_last = encoderval;
+  
+  if(count<1){
+  encoderval_initial = encoderval;
+  count = 1;
   }
   
-  posval = encoderval - compval;
+  potmotorval = map(potvalue,0,714,0,255); // For speed control using the potentiometer
+  potcontrolval = map(potvalue,0,714,0,360) + encoderval_initial;
   
-  //potmotorval = map(potvalue,0,714,0,255);
-  potcontrolval = map(potvalue,0,714,0,360);
-  error = potcontrolval - posval;
+  error = potcontrolval - encoderval;
+
+  if(error>1){
+    motordirection = 1;
+  }
+  else{
+    motordirection = 0;
+  }
+
+  // Multiplying the error by the gain
   motorinput = gain*error; 
 
-  if(abs(motorinput) >= 150 ){
+  // Saturation prevention to prevent the system from going unstable.
+  if(abs(motorinput) > 90 ){
     motorinput = 0;
     Serial.print("%The motorinput has saturated!!!");
   }
   
-  Serial.print(potvalue);
-  Serial.print("  ");
-  Serial.print(potmotorval);
+  Serial.print(potcontrolval);
   Serial.print("  ");
   Serial.print(encoderval);
   Serial.print("  ");
-  Serial.print(motorinput);
+  Serial.print(error);
   Serial.print("  ");
-  Serial.println(posval);
+  Serial.println(motordirection);
+  //Serial.print(motorinput);
+  //Serial.print("  ");
   
-  analogWrite(motorpin,0);
+  analogWrite(motorpin,potmotorval);
+  //digitalWrite(directionpin,motordirection);
   
 }
