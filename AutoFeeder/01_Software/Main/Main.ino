@@ -23,7 +23,7 @@ const int buttonPin=1;
 const int motorpwmPin = 2;
 
 /* calibrations and variables */
-int buttonState;
+int buttonState; // an enumeration should be used eventually for this button state.
 float motorpwmRR = 1; // deg/sec
 float motorpwmFR = 1; // deg/sec
 float motordutyCmd = 1;
