@@ -1,0 +1,40 @@
+<!----------------------MAIN TITLE----------------------->
+<!--Generic Control Interface-->
+<html>
+<head>
+  <title> Generic Control Interface </title>
+</head>
+
+<body>
+  <div>
+  <form>
+    <h1>Generic Control Interface</h1>
+    <input type="submit" name="submit" value="submit" />
+  </form>
+</div>
+
+<div>
+  <h2>Control set 1</h2>
+</div>
+
+<div>
+  <h2>Control set 2</h2>
+</div>
+
+</body>
+
+<fieldset>
+
+
+    <label for="volume">PWM Control</label>
+    <input type="range" id="start" name="volume"
+           min="0" max="100" step = "5"/>
+
+    <label for="cowbell">PWM 2</label>
+    <input type="range" id="cowbell" name="cowbell"
+           min="0" max="100" value="90" step="10" />
+
+</fieldset>
+
+<!--Reserved for generic data recieved by ESP-->
+</html>

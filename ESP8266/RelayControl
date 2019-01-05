@@ -1,0 +1,14 @@
+<!--Generic Control Interface-->
+<html>
+<head>
+  <title> Generic Control Interface </title>
+</head>
+
+<body>
+  <form>
+    <input type="submit" name="submit" value="submit" /> 
+  </form>
+
+
+<!--Reserved for generic data recieved by ESP-->
+</html>
