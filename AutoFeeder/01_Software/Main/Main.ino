@@ -10,6 +10,7 @@ Need to being establishing the logic for switching between the two modes of oper
 2. automated scheduling mode based on a schedule originally set by a user.
 
 Make sure to set the pins and board first before deploying this code***
+** Should not assume the motor will simply already be driven (simplest is to manually drive a HIGH output through the driving pin)
 
 */
 
@@ -17,8 +18,8 @@ Make sure to set the pins and board first before deploying this code***
 
 
 /* constants */
-const int buttonPin=1;
-const int motorpwmPin = 2;
+const int buttonPin=D4;
+const int motorpwmPin = D2;
 
 /* calibrations and variables */
 int buttonState; // an enumeration should be used eventually for this button state.
@@ -33,6 +34,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   requestMonitor();
+  //digitalWrite(motorpwmPin,LOW);
+  
 }
 
 
@@ -44,9 +47,10 @@ void loop() {
 void requestMonitor(){
   int request = digitalRead(buttonPin);
   if(request==HIGH){
-    analogWrite(motorpwmPin,50);
+    digitalWrite(motorpwmPin,HIGH);
+    delay(4000);
   }
   else{
-    digitalWrite(motorpwmPin,0);
+    digitalWrite(motorpwmPin, LOW);
   }
 }
