@@ -1,5 +1,5 @@
-#define FIREBASE_HOST ""
-#define FIREBASE_AUTH ""
+#define FIREBASE_HOST "https://autofeeder-79572.firebaseio.com/"
+#define FIREBASE_AUTH "qb1DXBORTRWc7YtZWV5SW0pDxi1NoEUaFKgErDRk"
 
 #define WIFI_SSID ""
 #define WIFI_PASSWORD ""
