@@ -1,6 +1,7 @@
 
-const int buttonPin = 2;
-const int ledPin = 13;
+const int buttonPin = 13;
+const int ledPin = 4;
+const int powerPin = 2;
 
 int ledState = LOW;
 int buttonState = LOW;
@@ -31,6 +32,7 @@ void loop() {
       if (buttonState == HIGH){
         ledState = !ledState;
         digitalWrite(ledPin, ledState);
+        digitalWrite(powerPin, ledState);
       }
     }
   }
