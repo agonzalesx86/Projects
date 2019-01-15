@@ -1,0 +1,5 @@
+==stage 1 scope==========================================================
+** building and implementing the request monitor
+The first working prototype should be able to dispense based on a user input received as a digital high or low in the software. if high feed/run the motor.
+
+==stage 2 scope==========================================================

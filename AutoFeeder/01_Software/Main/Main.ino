@@ -9,9 +9,8 @@ Need to being establishing the logic for switching between the two modes of oper
 1. manual mode (user requests a feed through an app or something). may need to use an analog input to keep it simple and get it going.
 2. automated scheduling mode based on a schedule originally set by a user.
 
-First version:
-- user input from an analog HIGH from a physical tactile button which will be the trigger. Some implementation to prevent toggle will be needed as well.
-note: will need to define states as well.
+Make sure to set the pins and board first before deploying this code***
+** Should not assume the motor will simply already be driven (simplest is to manually drive a HIGH output through the driving pin)
 
 */
 
@@ -19,13 +18,11 @@ note: will need to define states as well.
 
 
 /* constants */
-const int buttonPin=1;
-const int motorpwmPin = 2;
+const int buttonPin=D4;
+const int motorpwmPin = D2;
 
 /* calibrations and variables */
-int buttonState;
-float motorpwmRR = 1; // deg/sec
-float motorpwmFR = 1; // deg/sec
+int buttonState; // an enumeration should be used eventually for this button state.
 float motordutyCmd = 1;
 
 void setup() {
@@ -37,9 +34,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   requestMonitor();
-  if(buttonState==HIGH){
-    feed();
-  }
+  //digitalWrite(motorpwmPin,LOW);
+  
 }
 
 
@@ -48,23 +44,13 @@ void loop() {
 /********************FUNCTIONS*****************************/
 /*========================================================*/
 
-
-void feed_basic(){
-  // might need to implement a ramp up function when turning on the motor or a rate limiter.
-  analogWrite(motorpwmPin,HIGH);
-}
-
-void feed(){
-  motordutyCmd = final_lmting(motorpwmRR,);
-  t1 = millis();
-}
-
-float final_lmting(rr,x1,t1){
-  t2 = millis()
-  x_fnl = rr*(t2-t1) + x1;  
-  return x_fnl
-}
-
 void requestMonitor(){
-  digitalRead(buttonPin);
+  int request = digitalRead(buttonPin);
+  if(request==HIGH){
+    digitalWrite(motorpwmPin,HIGH);
+    delay(4000);
+  }
+  else{
+    digitalWrite(motorpwmPin, LOW);
+  }
 }
