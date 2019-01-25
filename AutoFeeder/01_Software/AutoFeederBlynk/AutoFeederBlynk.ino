@@ -50,7 +50,7 @@ char auth[] = "b59a512b48d5439b95c4a469a8a3b0bd";
 // Your WiFi credentials.
 // Set password to "" for open networks.
 char ssid[] = "MySpectrumWiFib4-2G";
-char pass[] = "mellowbike771";
+char pass[] = "";
 
 /* Initial Setup and declarations */
 WidgetRTC rtc;
