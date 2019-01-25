@@ -57,14 +57,8 @@ WidgetRTC rtc;
 int motorPin = 1;
 int motorRunTime = 3000; // in milliseconds
 int num_feeds = 10;
-int manRequest = 0;
-int appRequest = 0;
-
-BLYNK_WRITE(V1) {
-  long startTimeInSecs = param[0].asLong();
-  Serial.println(startTimeInSecs);
-  Serial.println();
-}
+int manReq = 0;
+int autoReq = 0;
 
 void setup()
 {
@@ -75,7 +69,14 @@ void setup()
   rtc.begin();
 
   // Add features here later to initialize any display values on the UI
+  //Blynk.virtualWrite(
   //Blynk.virtualWrite(V1, val);
+  Blynk.virtualWrite(V1,num_feeds);
+}
+
+
+BLYNK_WRITE(V0){
+  int manReq = 1;
 }
 
 void feedRoutine(){
@@ -86,7 +87,16 @@ void feedRoutine(){
   Blynk.virtualWrite(V1,num_feeds);
 }
 
+void requestMonitor(){
+  if(manReq == 1 || autoReq == 1){
+    feedRoutine();
+    manReq = 0;
+    autoReq = 0;
+  }
+}
+
 void loop()
 {
   Blynk.run();
+  requestMonitor();
 }
